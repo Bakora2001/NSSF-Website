@@ -6,8 +6,8 @@ import { Play, Users, Lock, HandCoins, Building2 } from "lucide-react";
 
 import photo1 from "@/assets/hero/nssf-photo1.jpg";
 import photo2 from "@/assets/hero/nssf-photo2.jpg";
-import nssfBuilding1 from "@/assets/hero/nssf-building-1.jpg";
-import nssfBuilding2 from "@/assets/hero/nssf-building-2.jpg";
+import nssfBuilding1 from "@/assets/hero/nssf-building-1.png";
+import nssfBuilding2 from "@/assets/hero/nssf-building-2.png";
 
 const SLIDES = [photo1, photo2, nssfBuilding1, nssfBuilding2];
 
@@ -39,9 +39,6 @@ export function Hero() {
 
       <div className="mx-auto max-w-7xl px-6 pt-16 pb-24 lg:pt-24 lg:pb-32 grid lg:grid-cols-[1.25fr_1fr] gap-12 items-center">
         <div className="text-white">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium backdrop-blur">
-            <span className="h-1.5 w-1.5 rounded-full bg-lime animate-pulse" /> Now with AI Loan Qualification
-          </motion.div>
           <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }} className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05] text-balance">
             Empowering Your <br />
             <span className="bg-gradient-to-r from-gold via-yellow to-gold bg-clip-text text-transparent">Financial Future</span>
@@ -50,7 +47,7 @@ export function Hero() {
             Secure <span className="text-gold">·</span> Grow <span className="text-gold">·</span> Thrive
           </motion.p>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.25 }} className="mt-3 max-w-xl text-white/80 text-base sm:text-lg">
-            We are committed to providing innovative financial solutions that empower our members to achieve their dreams and secure their future — now with AI-powered loan recommendations.
+            We are committed to providing innovative financial solutions that empower our members to achieve their dreams and secure their future now with AI-powered loan recommendations.
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }} className="mt-8 flex flex-wrap gap-3 items-center">
             <Button asChild size="lg" className="bg-gold text-gold-foreground hover:bg-gold/90 font-bold shadow-glow uppercase tracking-wide">
@@ -63,7 +60,6 @@ export function Hero() {
               <span className="grid h-11 w-11 place-items-center rounded-full border-2 border-white/70 group-hover:bg-white/10 transition">
                 <Play className="h-4 w-4 fill-white" />
               </span>
-              <span className="uppercase tracking-wider text-sm">Watch Video</span>
             </Link>
           </motion.div>
         </div>
@@ -97,7 +93,7 @@ function StatCard({ Icon, label, value, color, trend }: { Icon: any; label: stri
   const min = Math.min(...trend);
   const range = max - min || 1;
   const pts = trend.map((v, idx) => `${(idx / (trend.length - 1)) * 100},${30 - ((v - min) / range) * 24}`).join(" ");
-  
+
   const valueColorClass = "text-[#286d65]";
   const safeId = label.replace(/[^a-zA-Z]/g, "");
 
