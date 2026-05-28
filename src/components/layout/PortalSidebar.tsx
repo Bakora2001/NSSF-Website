@@ -17,7 +17,7 @@ const NAV = [
 
 export function PortalSidebar() {
   return (
-    <aside className="hidden lg:flex w-64 shrink-0 flex-col bg-sidebar text-sidebar-foreground">
+    <aside className="sticky top-0 h-screen hidden lg:flex w-64 shrink-0 flex-col bg-sidebar text-sidebar-foreground">
       <div className="p-5 border-b border-sidebar-border bg-sidebar-accent">
         <Logo variant="light" />
       </div>

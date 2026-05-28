@@ -3,7 +3,7 @@ import { FaFacebookF, FaXTwitter, FaInstagram, FaLinkedinIn, FaYoutube } from "r
 
 export function UtilityBar() {
   return (
-    <div className="hidden md:block bg-primary-deep text-white/90 text-xs">
+    <div className="hidden md:block bg-[#1f7a73] text-white/90 text-xs">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2">
         <div className="flex items-center gap-6">
           <a href="tel:+254111018100" className="flex items-center gap-1.5 hover:text-gold transition-colors"><Phone className="h-3.5 w-3.5" /> +254 111 018 100</a>
