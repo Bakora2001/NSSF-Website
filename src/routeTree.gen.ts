@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TendersRouteImport } from './routes/tenders'
+import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as OurStoryRouteImport } from './routes/our-story'
 import { Route as MediaRouteImport } from './routes/media'
@@ -21,8 +22,20 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProductsIndexRouteImport } from './routes/products/index'
 import { Route as PortalIndexRouteImport } from './routes/portal/index'
 import { Route as JoinIndexRouteImport } from './routes/join/index'
+import { Route as ResourcesTendersRouteImport } from './routes/resources/tenders'
+import { Route as ResourcesNewsRouteImport } from './routes/resources/news'
+import { Route as ResourcesFormsRouteImport } from './routes/resources/forms'
+import { Route as ResourcesCareersRouteImport } from './routes/resources/careers'
+import { Route as ResourcesCalculatorRouteImport } from './routes/resources/calculator'
+import { Route as ProductsIslamicFinanceRouteImport } from './routes/products/islamic-finance'
+import { Route as ProductsFosaSavingsRouteImport } from './routes/products/fosa-savings'
+import { Route as ProductsFosaLoansRouteImport } from './routes/products/fosa-loans'
+import { Route as ProductsFinancialServicesRouteImport } from './routes/products/financial-services'
+import { Route as ProductsDepositsRouteImport } from './routes/products/deposits'
+import { Route as ProductsBosaLoansRouteImport } from './routes/products/bosa-loans'
 import { Route as PortalTransfersRouteImport } from './routes/portal/transfers'
 import { Route as PortalSupportRouteImport } from './routes/portal/support'
 import { Route as PortalSettingsRouteImport } from './routes/portal/settings'
@@ -38,6 +51,11 @@ import { Route as JoinRegisterRouteImport } from './routes/join/register'
 const TendersRoute = TendersRouteImport.update({
   id: '/tenders',
   path: '/tenders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourcesRoute = ResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductsRoute = ProductsRouteImport.update({
@@ -95,6 +113,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductsIndexRoute = ProductsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProductsRoute,
+} as any)
 const PortalIndexRoute = PortalIndexRouteImport.update({
   id: '/portal/',
   path: '/portal/',
@@ -104,6 +127,62 @@ const JoinIndexRoute = JoinIndexRouteImport.update({
   id: '/join/',
   path: '/join/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ResourcesTendersRoute = ResourcesTendersRouteImport.update({
+  id: '/tenders',
+  path: '/tenders',
+  getParentRoute: () => ResourcesRoute,
+} as any)
+const ResourcesNewsRoute = ResourcesNewsRouteImport.update({
+  id: '/news',
+  path: '/news',
+  getParentRoute: () => ResourcesRoute,
+} as any)
+const ResourcesFormsRoute = ResourcesFormsRouteImport.update({
+  id: '/forms',
+  path: '/forms',
+  getParentRoute: () => ResourcesRoute,
+} as any)
+const ResourcesCareersRoute = ResourcesCareersRouteImport.update({
+  id: '/careers',
+  path: '/careers',
+  getParentRoute: () => ResourcesRoute,
+} as any)
+const ResourcesCalculatorRoute = ResourcesCalculatorRouteImport.update({
+  id: '/calculator',
+  path: '/calculator',
+  getParentRoute: () => ResourcesRoute,
+} as any)
+const ProductsIslamicFinanceRoute = ProductsIslamicFinanceRouteImport.update({
+  id: '/islamic-finance',
+  path: '/islamic-finance',
+  getParentRoute: () => ProductsRoute,
+} as any)
+const ProductsFosaSavingsRoute = ProductsFosaSavingsRouteImport.update({
+  id: '/fosa-savings',
+  path: '/fosa-savings',
+  getParentRoute: () => ProductsRoute,
+} as any)
+const ProductsFosaLoansRoute = ProductsFosaLoansRouteImport.update({
+  id: '/fosa-loans',
+  path: '/fosa-loans',
+  getParentRoute: () => ProductsRoute,
+} as any)
+const ProductsFinancialServicesRoute =
+  ProductsFinancialServicesRouteImport.update({
+    id: '/financial-services',
+    path: '/financial-services',
+    getParentRoute: () => ProductsRoute,
+  } as any)
+const ProductsDepositsRoute = ProductsDepositsRouteImport.update({
+  id: '/deposits',
+  path: '/deposits',
+  getParentRoute: () => ProductsRoute,
+} as any)
+const ProductsBosaLoansRoute = ProductsBosaLoansRouteImport.update({
+  id: '/bosa-loans',
+  path: '/bosa-loans',
+  getParentRoute: () => ProductsRoute,
 } as any)
 const PortalTransfersRoute = PortalTransfersRouteImport.update({
   id: '/portal/transfers',
@@ -172,7 +251,8 @@ export interface FileRoutesByFullPath {
   '/loans': typeof LoansRoute
   '/media': typeof MediaRoute
   '/our-story': typeof OurStoryRoute
-  '/products': typeof ProductsRoute
+  '/products': typeof ProductsRouteWithChildren
+  '/resources': typeof ResourcesRouteWithChildren
   '/tenders': typeof TendersRoute
   '/join/register': typeof JoinRegisterRoute
   '/portal/accounts': typeof PortalAccountsRoute
@@ -185,8 +265,20 @@ export interface FileRoutesByFullPath {
   '/portal/settings': typeof PortalSettingsRoute
   '/portal/support': typeof PortalSupportRoute
   '/portal/transfers': typeof PortalTransfersRoute
+  '/products/bosa-loans': typeof ProductsBosaLoansRoute
+  '/products/deposits': typeof ProductsDepositsRoute
+  '/products/financial-services': typeof ProductsFinancialServicesRoute
+  '/products/fosa-loans': typeof ProductsFosaLoansRoute
+  '/products/fosa-savings': typeof ProductsFosaSavingsRoute
+  '/products/islamic-finance': typeof ProductsIslamicFinanceRoute
+  '/resources/calculator': typeof ResourcesCalculatorRoute
+  '/resources/careers': typeof ResourcesCareersRoute
+  '/resources/forms': typeof ResourcesFormsRoute
+  '/resources/news': typeof ResourcesNewsRoute
+  '/resources/tenders': typeof ResourcesTendersRoute
   '/join/': typeof JoinIndexRoute
   '/portal/': typeof PortalIndexRoute
+  '/products/': typeof ProductsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -199,7 +291,7 @@ export interface FileRoutesByTo {
   '/loans': typeof LoansRoute
   '/media': typeof MediaRoute
   '/our-story': typeof OurStoryRoute
-  '/products': typeof ProductsRoute
+  '/resources': typeof ResourcesRouteWithChildren
   '/tenders': typeof TendersRoute
   '/join/register': typeof JoinRegisterRoute
   '/portal/accounts': typeof PortalAccountsRoute
@@ -212,8 +304,20 @@ export interface FileRoutesByTo {
   '/portal/settings': typeof PortalSettingsRoute
   '/portal/support': typeof PortalSupportRoute
   '/portal/transfers': typeof PortalTransfersRoute
+  '/products/bosa-loans': typeof ProductsBosaLoansRoute
+  '/products/deposits': typeof ProductsDepositsRoute
+  '/products/financial-services': typeof ProductsFinancialServicesRoute
+  '/products/fosa-loans': typeof ProductsFosaLoansRoute
+  '/products/fosa-savings': typeof ProductsFosaSavingsRoute
+  '/products/islamic-finance': typeof ProductsIslamicFinanceRoute
+  '/resources/calculator': typeof ResourcesCalculatorRoute
+  '/resources/careers': typeof ResourcesCareersRoute
+  '/resources/forms': typeof ResourcesFormsRoute
+  '/resources/news': typeof ResourcesNewsRoute
+  '/resources/tenders': typeof ResourcesTendersRoute
   '/join': typeof JoinIndexRoute
   '/portal': typeof PortalIndexRoute
+  '/products': typeof ProductsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -227,7 +331,8 @@ export interface FileRoutesById {
   '/loans': typeof LoansRoute
   '/media': typeof MediaRoute
   '/our-story': typeof OurStoryRoute
-  '/products': typeof ProductsRoute
+  '/products': typeof ProductsRouteWithChildren
+  '/resources': typeof ResourcesRouteWithChildren
   '/tenders': typeof TendersRoute
   '/join/register': typeof JoinRegisterRoute
   '/portal/accounts': typeof PortalAccountsRoute
@@ -240,8 +345,20 @@ export interface FileRoutesById {
   '/portal/settings': typeof PortalSettingsRoute
   '/portal/support': typeof PortalSupportRoute
   '/portal/transfers': typeof PortalTransfersRoute
+  '/products/bosa-loans': typeof ProductsBosaLoansRoute
+  '/products/deposits': typeof ProductsDepositsRoute
+  '/products/financial-services': typeof ProductsFinancialServicesRoute
+  '/products/fosa-loans': typeof ProductsFosaLoansRoute
+  '/products/fosa-savings': typeof ProductsFosaSavingsRoute
+  '/products/islamic-finance': typeof ProductsIslamicFinanceRoute
+  '/resources/calculator': typeof ResourcesCalculatorRoute
+  '/resources/careers': typeof ResourcesCareersRoute
+  '/resources/forms': typeof ResourcesFormsRoute
+  '/resources/news': typeof ResourcesNewsRoute
+  '/resources/tenders': typeof ResourcesTendersRoute
   '/join/': typeof JoinIndexRoute
   '/portal/': typeof PortalIndexRoute
+  '/products/': typeof ProductsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -257,6 +374,7 @@ export interface FileRouteTypes {
     | '/media'
     | '/our-story'
     | '/products'
+    | '/resources'
     | '/tenders'
     | '/join/register'
     | '/portal/accounts'
@@ -269,8 +387,20 @@ export interface FileRouteTypes {
     | '/portal/settings'
     | '/portal/support'
     | '/portal/transfers'
+    | '/products/bosa-loans'
+    | '/products/deposits'
+    | '/products/financial-services'
+    | '/products/fosa-loans'
+    | '/products/fosa-savings'
+    | '/products/islamic-finance'
+    | '/resources/calculator'
+    | '/resources/careers'
+    | '/resources/forms'
+    | '/resources/news'
+    | '/resources/tenders'
     | '/join/'
     | '/portal/'
+    | '/products/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -283,7 +413,7 @@ export interface FileRouteTypes {
     | '/loans'
     | '/media'
     | '/our-story'
-    | '/products'
+    | '/resources'
     | '/tenders'
     | '/join/register'
     | '/portal/accounts'
@@ -296,8 +426,20 @@ export interface FileRouteTypes {
     | '/portal/settings'
     | '/portal/support'
     | '/portal/transfers'
+    | '/products/bosa-loans'
+    | '/products/deposits'
+    | '/products/financial-services'
+    | '/products/fosa-loans'
+    | '/products/fosa-savings'
+    | '/products/islamic-finance'
+    | '/resources/calculator'
+    | '/resources/careers'
+    | '/resources/forms'
+    | '/resources/news'
+    | '/resources/tenders'
     | '/join'
     | '/portal'
+    | '/products'
   id:
     | '__root__'
     | '/'
@@ -311,6 +453,7 @@ export interface FileRouteTypes {
     | '/media'
     | '/our-story'
     | '/products'
+    | '/resources'
     | '/tenders'
     | '/join/register'
     | '/portal/accounts'
@@ -323,8 +466,20 @@ export interface FileRouteTypes {
     | '/portal/settings'
     | '/portal/support'
     | '/portal/transfers'
+    | '/products/bosa-loans'
+    | '/products/deposits'
+    | '/products/financial-services'
+    | '/products/fosa-loans'
+    | '/products/fosa-savings'
+    | '/products/islamic-finance'
+    | '/resources/calculator'
+    | '/resources/careers'
+    | '/resources/forms'
+    | '/resources/news'
+    | '/resources/tenders'
     | '/join/'
     | '/portal/'
+    | '/products/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -338,7 +493,8 @@ export interface RootRouteChildren {
   LoansRoute: typeof LoansRoute
   MediaRoute: typeof MediaRoute
   OurStoryRoute: typeof OurStoryRoute
-  ProductsRoute: typeof ProductsRoute
+  ProductsRoute: typeof ProductsRouteWithChildren
+  ResourcesRoute: typeof ResourcesRouteWithChildren
   TendersRoute: typeof TendersRoute
   JoinRegisterRoute: typeof JoinRegisterRoute
   PortalAccountsRoute: typeof PortalAccountsRoute
@@ -362,6 +518,13 @@ declare module '@tanstack/react-router' {
       path: '/tenders'
       fullPath: '/tenders'
       preLoaderRoute: typeof TendersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resources': {
+      id: '/resources'
+      path: '/resources'
+      fullPath: '/resources'
+      preLoaderRoute: typeof ResourcesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/products': {
@@ -441,6 +604,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/products/': {
+      id: '/products/'
+      path: '/'
+      fullPath: '/products/'
+      preLoaderRoute: typeof ProductsIndexRouteImport
+      parentRoute: typeof ProductsRoute
+    }
     '/portal/': {
       id: '/portal/'
       path: '/portal'
@@ -454,6 +624,83 @@ declare module '@tanstack/react-router' {
       fullPath: '/join/'
       preLoaderRoute: typeof JoinIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/resources/tenders': {
+      id: '/resources/tenders'
+      path: '/tenders'
+      fullPath: '/resources/tenders'
+      preLoaderRoute: typeof ResourcesTendersRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/news': {
+      id: '/resources/news'
+      path: '/news'
+      fullPath: '/resources/news'
+      preLoaderRoute: typeof ResourcesNewsRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/forms': {
+      id: '/resources/forms'
+      path: '/forms'
+      fullPath: '/resources/forms'
+      preLoaderRoute: typeof ResourcesFormsRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/careers': {
+      id: '/resources/careers'
+      path: '/careers'
+      fullPath: '/resources/careers'
+      preLoaderRoute: typeof ResourcesCareersRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/calculator': {
+      id: '/resources/calculator'
+      path: '/calculator'
+      fullPath: '/resources/calculator'
+      preLoaderRoute: typeof ResourcesCalculatorRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/products/islamic-finance': {
+      id: '/products/islamic-finance'
+      path: '/islamic-finance'
+      fullPath: '/products/islamic-finance'
+      preLoaderRoute: typeof ProductsIslamicFinanceRouteImport
+      parentRoute: typeof ProductsRoute
+    }
+    '/products/fosa-savings': {
+      id: '/products/fosa-savings'
+      path: '/fosa-savings'
+      fullPath: '/products/fosa-savings'
+      preLoaderRoute: typeof ProductsFosaSavingsRouteImport
+      parentRoute: typeof ProductsRoute
+    }
+    '/products/fosa-loans': {
+      id: '/products/fosa-loans'
+      path: '/fosa-loans'
+      fullPath: '/products/fosa-loans'
+      preLoaderRoute: typeof ProductsFosaLoansRouteImport
+      parentRoute: typeof ProductsRoute
+    }
+    '/products/financial-services': {
+      id: '/products/financial-services'
+      path: '/financial-services'
+      fullPath: '/products/financial-services'
+      preLoaderRoute: typeof ProductsFinancialServicesRouteImport
+      parentRoute: typeof ProductsRoute
+    }
+    '/products/deposits': {
+      id: '/products/deposits'
+      path: '/deposits'
+      fullPath: '/products/deposits'
+      preLoaderRoute: typeof ProductsDepositsRouteImport
+      parentRoute: typeof ProductsRoute
+    }
+    '/products/bosa-loans': {
+      id: '/products/bosa-loans'
+      path: '/bosa-loans'
+      fullPath: '/products/bosa-loans'
+      preLoaderRoute: typeof ProductsBosaLoansRouteImport
+      parentRoute: typeof ProductsRoute
     }
     '/portal/transfers': {
       id: '/portal/transfers'
@@ -535,6 +782,50 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ProductsRouteChildren {
+  ProductsBosaLoansRoute: typeof ProductsBosaLoansRoute
+  ProductsDepositsRoute: typeof ProductsDepositsRoute
+  ProductsFinancialServicesRoute: typeof ProductsFinancialServicesRoute
+  ProductsFosaLoansRoute: typeof ProductsFosaLoansRoute
+  ProductsFosaSavingsRoute: typeof ProductsFosaSavingsRoute
+  ProductsIslamicFinanceRoute: typeof ProductsIslamicFinanceRoute
+  ProductsIndexRoute: typeof ProductsIndexRoute
+}
+
+const ProductsRouteChildren: ProductsRouteChildren = {
+  ProductsBosaLoansRoute: ProductsBosaLoansRoute,
+  ProductsDepositsRoute: ProductsDepositsRoute,
+  ProductsFinancialServicesRoute: ProductsFinancialServicesRoute,
+  ProductsFosaLoansRoute: ProductsFosaLoansRoute,
+  ProductsFosaSavingsRoute: ProductsFosaSavingsRoute,
+  ProductsIslamicFinanceRoute: ProductsIslamicFinanceRoute,
+  ProductsIndexRoute: ProductsIndexRoute,
+}
+
+const ProductsRouteWithChildren = ProductsRoute._addFileChildren(
+  ProductsRouteChildren,
+)
+
+interface ResourcesRouteChildren {
+  ResourcesCalculatorRoute: typeof ResourcesCalculatorRoute
+  ResourcesCareersRoute: typeof ResourcesCareersRoute
+  ResourcesFormsRoute: typeof ResourcesFormsRoute
+  ResourcesNewsRoute: typeof ResourcesNewsRoute
+  ResourcesTendersRoute: typeof ResourcesTendersRoute
+}
+
+const ResourcesRouteChildren: ResourcesRouteChildren = {
+  ResourcesCalculatorRoute: ResourcesCalculatorRoute,
+  ResourcesCareersRoute: ResourcesCareersRoute,
+  ResourcesFormsRoute: ResourcesFormsRoute,
+  ResourcesNewsRoute: ResourcesNewsRoute,
+  ResourcesTendersRoute: ResourcesTendersRoute,
+}
+
+const ResourcesRouteWithChildren = ResourcesRoute._addFileChildren(
+  ResourcesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -546,7 +837,8 @@ const rootRouteChildren: RootRouteChildren = {
   LoansRoute: LoansRoute,
   MediaRoute: MediaRoute,
   OurStoryRoute: OurStoryRoute,
-  ProductsRoute: ProductsRoute,
+  ProductsRoute: ProductsRouteWithChildren,
+  ResourcesRoute: ResourcesRouteWithChildren,
   TendersRoute: TendersRoute,
   JoinRegisterRoute: JoinRegisterRoute,
   PortalAccountsRoute: PortalAccountsRoute,

@@ -3,6 +3,8 @@ import { PublicLayout } from "@/components/layout/PublicLayout";
 import { Hero } from "@/components/home/Hero";
 import { Services } from "@/components/home/Services";
 import { LoanProducts } from "@/components/home/LoanProducts";
+import { Partners } from "@/components/home/Partners";
+import { AITeaser } from "@/components/home/AITeaser";
 import { TrustBar } from "@/components/home/TrustBar";
 import { ChatAssistant } from "@/components/ai/ChatAssistant";
 
@@ -24,6 +26,8 @@ function Home() {
       <Hero />
       <Services />
       <LoanProducts />
+      <Partners />
+      <AITeaser />
       <TrustBar />
       <ChatAssistant />
     </PublicLayout>

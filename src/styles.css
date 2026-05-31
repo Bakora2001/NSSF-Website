@@ -136,6 +136,7 @@
 
   html {
     scroll-behavior: smooth;
+    font-size: 96%; /* Zooms out the entire page system slightly for a cleaner, non-magnified look */
   }
 
   body {
