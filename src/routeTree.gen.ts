@@ -16,6 +16,7 @@ import { Route as OurStoryRouteImport } from './routes/our-story'
 import { Route as MediaRouteImport } from './routes/media'
 import { Route as LoansRouteImport } from './routes/loans'
 import { Route as LeadershipRouteImport } from './routes/leadership'
+import { Route as InsuranceProductsRouteImport } from './routes/insurance-products'
 import { Route as InsuranceRouteImport } from './routes/insurance'
 import { Route as FaqsRouteImport } from './routes/faqs'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -81,6 +82,11 @@ const LoansRoute = LoansRouteImport.update({
 const LeadershipRoute = LeadershipRouteImport.update({
   id: '/leadership',
   path: '/leadership',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsuranceProductsRoute = InsuranceProductsRouteImport.update({
+  id: '/insurance-products',
+  path: '/insurance-products',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InsuranceRoute = InsuranceRouteImport.update({
@@ -247,6 +253,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/faqs': typeof FaqsRoute
   '/insurance': typeof InsuranceRoute
+  '/insurance-products': typeof InsuranceProductsRoute
   '/leadership': typeof LeadershipRoute
   '/loans': typeof LoansRoute
   '/media': typeof MediaRoute
@@ -287,6 +294,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/faqs': typeof FaqsRoute
   '/insurance': typeof InsuranceRoute
+  '/insurance-products': typeof InsuranceProductsRoute
   '/leadership': typeof LeadershipRoute
   '/loans': typeof LoansRoute
   '/media': typeof MediaRoute
@@ -327,6 +335,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/faqs': typeof FaqsRoute
   '/insurance': typeof InsuranceRoute
+  '/insurance-products': typeof InsuranceProductsRoute
   '/leadership': typeof LeadershipRoute
   '/loans': typeof LoansRoute
   '/media': typeof MediaRoute
@@ -369,6 +378,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faqs'
     | '/insurance'
+    | '/insurance-products'
     | '/leadership'
     | '/loans'
     | '/media'
@@ -409,6 +419,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faqs'
     | '/insurance'
+    | '/insurance-products'
     | '/leadership'
     | '/loans'
     | '/media'
@@ -448,6 +459,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faqs'
     | '/insurance'
+    | '/insurance-products'
     | '/leadership'
     | '/loans'
     | '/media'
@@ -489,6 +501,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   FaqsRoute: typeof FaqsRoute
   InsuranceRoute: typeof InsuranceRoute
+  InsuranceProductsRoute: typeof InsuranceProductsRoute
   LeadershipRoute: typeof LeadershipRoute
   LoansRoute: typeof LoansRoute
   MediaRoute: typeof MediaRoute
@@ -560,6 +573,13 @@ declare module '@tanstack/react-router' {
       path: '/leadership'
       fullPath: '/leadership'
       preLoaderRoute: typeof LeadershipRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insurance-products': {
+      id: '/insurance-products'
+      path: '/insurance-products'
+      fullPath: '/insurance-products'
+      preLoaderRoute: typeof InsuranceProductsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/insurance': {
@@ -833,6 +853,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   FaqsRoute: FaqsRoute,
   InsuranceRoute: InsuranceRoute,
+  InsuranceProductsRoute: InsuranceProductsRoute,
   LeadershipRoute: LeadershipRoute,
   LoansRoute: LoansRoute,
   MediaRoute: MediaRoute,

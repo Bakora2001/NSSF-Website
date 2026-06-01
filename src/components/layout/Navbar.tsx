@@ -20,7 +20,13 @@ const NAV: NavItem[] = [
     ],
   },
   { label: "PRODUCTS", megaMenu: true },
-  { label: "INSURANCE AGENCY", to: "/insurance" },
+  {
+    label: "INSURANCE AGENCY",
+    to: "/insurance",
+    dropdown: [
+      { label: "Insurance Products", to: "/insurance-products" },
+    ],
+  },
   { label: "CONTACT US",       to: "/contact" },
   { label: "MEMBER PORTAL",    to: "/portal/login" },
   { label: "FAQs",             to: "/faqs" },
@@ -309,7 +315,7 @@ const MEGA_PRODUCTS: MegaMenuCategory[] = [
 ];
 
 /* ─── ABOUT US Dropdown Component with Hover Delay ───────────────────────── */
-function NavDropdown({ item }: { item: { label: string; dropdown: DropdownLink[] } }) {
+function NavDropdown({ item }: { item: { label: string; to?: string; dropdown: DropdownLink[] } }) {
   const [open, setOpen] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -330,22 +336,37 @@ function NavDropdown({ item }: { item: { label: string; dropdown: DropdownLink[]
     };
   }, []);
 
+  const triggerClasses = `relative px-3 py-2 xl:px-2 2xl:px-3 transition-colors flex items-center gap-1 font-semibold text-[12.5px] tracking-wide whitespace-nowrap ${
+    open ? "text-primary" : "text-foreground/80 hover:text-primary"
+  }`;
+
   return (
     <div
       className="relative"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <button
-        className={`relative px-3 py-2 xl:px-2 2xl:px-3 transition-colors flex items-center gap-1 font-semibold text-[12.5px] tracking-wide whitespace-nowrap ${
-          open ? "text-primary" : "text-foreground/80 hover:text-primary"
-        }`}
-      >
-        {item.label}
-        <ChevronDown
-          className={`h-3.5 w-3.5 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-        />
-      </button>
+      {item.to ? (
+        <Link
+          to={item.to}
+          className={triggerClasses}
+          activeProps={{ className: "text-primary" }}
+        >
+          {item.label}
+          <ChevronDown
+            className={`h-3.5 w-3.5 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          />
+        </Link>
+      ) : (
+        <button
+          className={triggerClasses}
+        >
+          {item.label}
+          <ChevronDown
+            className={`h-3.5 w-3.5 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          />
+        </button>
+      )}
 
       {open && (
         <div
@@ -544,7 +565,7 @@ export function Navbar() {
         <nav className="hidden xl:flex items-center gap-1 xl:gap-0.5 2xl:gap-1.5 text-[12.5px] font-semibold tracking-wide">
           {NAV.map((n) => {
             if (n.dropdown) {
-              return <NavDropdown key={n.label} item={{ label: n.label, dropdown: n.dropdown }} />;
+              return <NavDropdown key={n.label} item={{ label: n.label, to: n.to, dropdown: n.dropdown }} />;
             }
             if (n.megaMenu) {
               return <ProductsMegaDropdown key={n.label} />;
@@ -600,15 +621,25 @@ export function Navbar() {
               if (n.dropdown) {
                 return (
                   <div key={n.label}>
-                    <p className="px-3 py-1 text-xs uppercase tracking-wider text-muted-foreground font-bold mt-1">
-                      {n.label}
-                    </p>
+                    {n.to ? (
+                      <Link
+                        to={n.to}
+                        onClick={() => setOpen(false)}
+                        className="block px-3 py-1 text-xs uppercase tracking-wider text-muted-foreground font-bold mt-1 hover:text-primary transition-colors"
+                      >
+                        {n.label}
+                      </Link>
+                    ) : (
+                      <p className="px-3 py-1 text-xs uppercase tracking-wider text-muted-foreground font-bold mt-1">
+                        {n.label}
+                      </p>
+                    )}
                     {n.dropdown.map((d) => (
                       <Link
                         key={d.to}
                         to={d.to}
                         onClick={() => setOpen(false)}
-                        className="block pl-6 pr-3 py-2 rounded-md hover:bg-muted text-foreground/80"
+                        className="block pl-6 pr-3 py-2 rounded-md hover:bg-muted text-foreground/80 font-bold"
                       >
                         {d.label}
                       </Link>
