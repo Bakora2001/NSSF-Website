@@ -99,9 +99,9 @@ function Avatar({
     : "0 4px 16px oklch(0.36 0.06 184 / 0.18)";
 
   if (member.photo && !hasError) {
-    const src = member.photo.startsWith("http") || member.photo.startsWith("/") || member.photo.startsWith("src/")
+    const src = member.photo.startsWith("http") || member.photo.startsWith("/")
       ? member.photo
-      : `/src/assets/${member.photo}`;
+      : `/${member.photo}`;
 
     return (
       <img

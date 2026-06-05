@@ -545,6 +545,17 @@ function ProductsMegaDropdown() {
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [activeMobileSubmenu, setActiveMobileSubmenu] = useState<string | null>(null);
+
+  const toggleMobileSubmenu = (label: string) => {
+    setActiveMobileSubmenu((prev) => (prev === label ? null : label));
+  };
+
+  useEffect(() => {
+    if (!open) {
+      setActiveMobileSubmenu(null);
+    }
+  }, [open]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -619,51 +630,55 @@ export function Navbar() {
         <div className="xl:hidden border-t border-border bg-background max-h-[85vh] overflow-y-auto">
           <nav className="mx-auto max-w-7xl px-4 py-4 grid gap-1 text-sm font-semibold">
             {NAV.map((n) => {
-              if (n.dropdown) {
+              if (n.dropdown || n.megaMenu) {
                 return (
-                  <div key={n.label}>
-                    {n.to ? (
-                      <Link
-                        to={n.to}
-                        onClick={() => setOpen(false)}
-                        className="block px-3 py-1 text-xs uppercase tracking-wider text-muted-foreground font-bold mt-1 hover:text-primary transition-colors"
-                      >
-                        {n.label}
-                      </Link>
-                    ) : (
-                      <p className="px-3 py-1 text-xs uppercase tracking-wider text-muted-foreground font-bold mt-1">
-                        {n.label}
-                      </p>
+                  <div key={n.label} className="border-b border-border/30 last:border-0 pb-1">
+                    <button
+                      onClick={() => toggleMobileSubmenu(n.label)}
+                      className="w-full flex items-center justify-between px-3 py-3 text-xs uppercase tracking-wider text-primary hover:text-primary-deep font-extrabold transition-colors text-left"
+                    >
+                      <span>{n.label}</span>
+                      <ChevronDown
+                        className={`h-4 w-4 transition-transform duration-200 text-primary/70 ${
+                          activeMobileSubmenu === n.label ? "rotate-180 text-primary" : ""
+                        }`}
+                      />
+                    </button>
+                    {activeMobileSubmenu === n.label && (
+                      <div className="pl-4 pr-2 pb-3 space-y-1 border-l-2 border-primary/20 ml-3.5 mb-2 animate-in slide-in-from-top-1 duration-200">
+                        {n.to && (
+                          <Link
+                            to={n.to}
+                            onClick={() => setOpen(false)}
+                            className="block px-3 py-2.5 rounded-lg text-xs font-semibold text-muted-foreground hover:text-primary hover:bg-muted transition-colors"
+                          >
+                            {n.label === "INSURANCE AGENCY" ? "Insurance Overview" : `${n.label} Overview`}
+                          </Link>
+                        )}
+                        {n.dropdown &&
+                          n.dropdown.map((d) => (
+                            <Link
+                              key={d.to}
+                              to={d.to}
+                              onClick={() => setOpen(false)}
+                              className="block px-3 py-2.5 rounded-lg text-xs font-semibold text-muted-foreground hover:text-primary hover:bg-muted transition-colors"
+                            >
+                              {d.label}
+                            </Link>
+                          ))}
+                        {n.megaMenu &&
+                          MEGA_PRODUCTS.map((p) => (
+                            <Link
+                              key={p.id}
+                              to={p.to}
+                              onClick={() => setOpen(false)}
+                              className="block px-3 py-2.5 rounded-lg text-xs font-semibold text-muted-foreground hover:text-primary hover:bg-muted transition-colors"
+                            >
+                              {p.label}
+                            </Link>
+                          ))}
+                      </div>
                     )}
-                    {n.dropdown.map((d) => (
-                      <Link
-                        key={d.to}
-                        to={d.to}
-                        onClick={() => setOpen(false)}
-                        className="block pl-6 pr-3 py-2 rounded-md hover:bg-muted text-foreground/80 font-bold"
-                      >
-                        {d.label}
-                      </Link>
-                    ))}
-                  </div>
-                );
-              }
-              if (n.megaMenu) {
-                return (
-                  <div key={n.label}>
-                    <p className="px-3 py-1 text-xs uppercase tracking-wider text-muted-foreground font-bold mt-1">
-                      {n.label}
-                    </p>
-                    {MEGA_PRODUCTS.map((p) => (
-                      <Link
-                        key={p.id}
-                        to={p.to}
-                        onClick={() => setOpen(false)}
-                        className="block pl-6 pr-3 py-2 rounded-md hover:bg-muted text-foreground/80 font-bold"
-                      >
-                        {p.label}
-                      </Link>
-                    ))}
                   </div>
                 );
               }
@@ -672,10 +687,11 @@ export function Navbar() {
                   key={n.to}
                   to={n.to!}
                   onClick={() => setOpen(false)}
-                  className="px-3 py-2 rounded-md hover:bg-muted text-foreground/80"
-                  activeProps={{ className: "bg-primary-soft text-primary" }}
+                  className="px-3 py-3 rounded-lg hover:bg-muted text-foreground/80 text-sm font-bold border-b border-border/30 last:border-0 flex items-center justify-between"
+                  activeProps={{ className: "bg-primary-soft text-primary font-extrabold" }}
+                  activeOptions={{ exact: n.to === "/" }}
                 >
-                  {n.label}
+                  <span>{n.label}</span>
                 </Link>
               );
             })}

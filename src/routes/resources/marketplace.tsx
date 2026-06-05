@@ -312,6 +312,7 @@ function Page() {
   const [customerName, setCustomerName] = useState("");
   const [deliveryPref, setDeliveryPref] = useState<"pickup" | "delivery">("pickup");
   const [address, setAddress] = useState("");
+  const [isMobileCartOpen, setIsMobileCartOpen] = useState(false);
 
   const filtered = PRODUCTS.filter(p => {
     const matchCat = category === "All Products" || p.category === category;
@@ -355,11 +356,11 @@ function Page() {
   return (
     <PublicLayout>
       {/* Redesigned 2-Column Main Layout: Stack containing Hero + Listings on left, Cart on right */}
-      <div className="max-w-7xl mx-auto px-4 py-8 lg:py-10">
-        <div className="grid lg:grid-cols-[1fr_320px] xl:grid-cols-[1fr_360px] gap-6 items-start">
+      <div className="max-w-7xl mx-auto px-4 py-8 lg:py-10 w-full overflow-hidden lg:overflow-visible">
+        <div className="grid lg:grid-cols-[1fr_320px] xl:grid-cols-[1fr_360px] gap-6 items-start w-full min-w-0">
           
           {/* Left Column Stack (Hero Banner, Categories, Search, Grid, Trust strip) */}
-          <div className="space-y-6">
+          <div className="space-y-6 min-w-0 w-full">
             
             {/* Shorter Hero Banner (Grid with Tabletop Showcase Image on Right) */}
             <section className="relative rounded-3xl bg-gradient-to-br from-[#0f3322] via-[#1a4731] to-[#0d2e1e] text-white overflow-hidden shadow-elegant p-6 sm:p-8 lg:p-10 min-h-[260px] flex items-center border border-[#1a4731]/10">
@@ -402,10 +403,10 @@ function Page() {
             </section>
 
             {/* Inner Grid for Category List and Products */}
-            <div className="grid md:grid-cols-[200px_1fr] gap-6 items-start">
+            <div className="grid md:grid-cols-[200px_1fr] gap-6 items-start w-full min-w-0">
               
               {/* Category selector */}
-              <aside className="space-y-4">
+              <aside className="space-y-4 min-w-0 w-full overflow-hidden">
                 <div className="bg-white dark:bg-card border border-gray-100 dark:border-border rounded-2xl p-4 shadow-xs">
                   <h2 className="font-display font-extrabold text-xs uppercase tracking-widest text-gray-400 dark:text-muted-foreground mb-3">Categories</h2>
                   <div className="flex md:flex-col gap-1 overflow-x-auto pb-2 md:pb-0 scrollbar-none whitespace-nowrap">
@@ -436,7 +437,7 @@ function Page() {
               </aside>
 
               {/* Products Area */}
-              <div className="space-y-4">
+              <div className="space-y-4 min-w-0 w-full">
                 {/* Search Bar */}
                 <div className="flex gap-2">
                   <div className="relative flex-1">
@@ -507,7 +508,7 @@ function Page() {
           </div>
 
           {/* Right Column (Cart Sidebar, Order guide, Phone payment visualization) */}
-          <aside className="sticky top-24 space-y-4 lg:max-h-[calc(100vh-120px)] lg:overflow-y-auto pr-1 pb-4 scrollbar-none">
+          <aside className="hidden lg:block sticky top-24 space-y-4 lg:max-h-[calc(100vh-120px)] lg:overflow-y-auto pr-1 pb-4 scrollbar-none">
             
             {/* 1. Shopping Cart Summary Section */}
             <div className="rounded-2xl border border-gray-100 dark:border-border bg-white dark:bg-card shadow-sm overflow-hidden flex flex-col">
@@ -722,7 +723,7 @@ function Page() {
       {stkStage !== "idle" && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-xs" onClick={() => { if (stkStage !== "processing") setStkStage("idle"); }} />
-          <div className="relative w-full max-w-md bg-white dark:bg-card rounded-2xl border border-gray-150 dark:border-border shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+          <div className="relative w-full max-w-md bg-white dark:bg-card rounded-2xl border border-gray-150 dark:border-border shadow-2xl overflow-y-auto max-h-[90vh] animate-in zoom-in-95 duration-200">
             {/* Header */}
             <div className="bg-[#1a4731] p-5 text-white shadow-sm flex justify-between items-center">
               <div>
@@ -879,6 +880,126 @@ function Page() {
                     className="w-full py-3 rounded-xl bg-[#1a4731] text-white font-extrabold text-xs uppercase tracking-wider hover:bg-[#0f3322] transition-colors"
                   >
                     Continue Shopping
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Floating Mobile Cart Button */}
+      {cartCount > 0 && (
+        <div className="lg:hidden fixed bottom-6 right-6 z-40 animate-in fade-in zoom-in duration-200">
+          <button
+            onClick={() => setIsMobileCartOpen(true)}
+            className="flex items-center gap-2 px-5 py-4 rounded-full bg-[#1a4731] hover:bg-[#0f3322] text-white font-extrabold text-sm shadow-2xl transition-all border border-emerald-700/30 active:scale-95 duration-150"
+          >
+            <ShoppingCart className="h-5 w-5" />
+            <span>View Cart ({cartCount})</span>
+            <span className="bg-[#c9a227] text-white px-2 py-0.5 rounded-full text-xs font-black ml-1">KES {total.toLocaleString()}</span>
+          </button>
+        </div>
+      )}
+
+      {/* Mobile Cart Drawer/Modal */}
+      {isMobileCartOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-xs transition-opacity duration-200"
+            onClick={() => setIsMobileCartOpen(false)}
+          />
+          {/* Content Panel */}
+          <div className="absolute right-0 bottom-0 top-0 w-full max-w-md bg-white dark:bg-card border-l border-gray-100 dark:border-border shadow-2xl flex flex-col z-10 animate-in slide-in-from-right duration-200">
+            <div className="p-4 bg-[#1a4731] text-white flex items-center justify-between shadow-sm">
+              <div className="flex items-center gap-2 font-bold text-xs uppercase tracking-wider">
+                <ShoppingCart className="h-4 w-4" />
+                Your Cart
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-black">{cartCount} items</span>
+                <button
+                  onClick={() => setIsMobileCartOpen(false)}
+                  className="p-1 rounded-md hover:bg-white/10 text-white/80 hover:text-white"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+            
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              {cart.length === 0 ? (
+                <div className="py-12 text-center space-y-2">
+                  <ShoppingCart className="h-10 w-10 mx-auto text-gray-300 dark:text-muted-foreground/30" />
+                  <p className="text-xs font-bold text-gray-500 dark:text-muted-foreground">Your cart is empty</p>
+                  <p className="text-[10px] text-gray-400">Choose branded merchandise to checkout</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {/* Cart Items List */}
+                  <div className="divide-y divide-gray-100 dark:divide-border/40">
+                    {cart.map(item => (
+                      <div key={item.product.id} className="flex items-center gap-3 py-3 first:pt-0">
+                        <img
+                          src={item.product.image}
+                          alt={item.product.name}
+                          className="h-12 w-12 rounded-xl object-cover bg-gray-50 shrink-0 border border-gray-100 dark:border-border"
+                        />
+                        <div className="flex-1 min-w-0">
+                          <div className="text-xs font-bold truncate text-gray-800 dark:text-foreground">{item.product.name}</div>
+                          <div className="text-[11px] text-gray-400 font-semibold mt-0.5">KES {item.product.price.toLocaleString()}</div>
+                        </div>
+                        
+                        {/* Quantity selectors */}
+                        <div className="flex items-center gap-1 shrink-0">
+                          <button
+                            onClick={() => updateQty(item.product.id, -1)}
+                            className="h-6 w-6 rounded-md border border-gray-200 hover:bg-gray-100 dark:border-border dark:hover:bg-muted flex items-center justify-center text-gray-500"
+                          >
+                            <Minus className="h-3 w-3" />
+                          </button>
+                          <span className="w-6 text-center text-xs font-black text-foreground">{item.quantity}</span>
+                          <button
+                            onClick={() => updateQty(item.product.id, 1)}
+                            className="h-6 w-6 rounded-md border border-gray-200 hover:bg-gray-100 dark:border-border dark:hover:bg-muted flex items-center justify-center text-gray-500"
+                          >
+                            <Plus className="h-3 w-3" />
+                          </button>
+                        </div>
+
+                        <button
+                          onClick={() => updateQty(item.product.id, -item.quantity)}
+                          className="p-1 text-gray-300 hover:text-rose-500 transition-colors"
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Pricing summary */}
+                  <div className="border-t border-gray-100 dark:border-border/60 pt-4 space-y-2.5 text-xs">
+                    <div className="flex justify-between text-gray-500">
+                      <span className="font-semibold">Subtotal</span>
+                      <span className="font-black text-gray-800 dark:text-foreground">KES {subtotal.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between text-gray-500">
+                      <span className="font-semibold">Delivery</span>
+                      <span className="font-black text-gray-800 dark:text-foreground">
+                        {delivery === 0 ? "Free Pickup" : `KES ${delivery}`}
+                      </span>
+                    </div>
+                    <div className="flex justify-between font-black text-sm border-t border-gray-100 dark:border-border/60 pt-3">
+                      <span>Total</span>
+                      <span className="text-[#1a4731] dark:text-primary">KES {total.toLocaleString()}</span>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => { setIsMobileCartOpen(false); setStkStage("input"); }}
+                    className="w-full py-3.5 rounded-xl bg-[#1a4731] text-white font-extrabold text-xs uppercase tracking-wider hover:bg-[#0f3322] hover:shadow-md transition-all flex items-center justify-center gap-2"
+                  >
+                    Proceed to Checkout <ArrowRight className="h-4 w-4" />
                   </button>
                 </div>
               )}
